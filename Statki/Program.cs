@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace ConsoleApp2
+namespace Statki
 {
     internal class Program
     {
@@ -120,3 +120,4 @@ namespace ConsoleApp2
         }
     }
 }
+
