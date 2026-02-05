@@ -4,6 +4,7 @@ namespace Statki
 {
     internal class Program
     {
+        static Random xd = new Random();
         static void Main(string[] args)
         {
             // GTA VI code
@@ -21,14 +22,13 @@ namespace Statki
             int[,] pole = new int[w, h];
             int[,] widokGracza = new int[10, 10];
             int[] flota = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
-            DrawLogo();
-            foreach (int dlugosc in flota)
+            while (true)
             {
-                Postawstatki(pole, dlugosc);
+                Console.Clear();
+                DrawLogo();
+                rysujpole(pole);
+                strzal(pole);
             }
-            rysujpole(pole);
-            
-            
 
 
 
@@ -43,12 +43,13 @@ namespace Statki
 
 
 
-     
-     
+
+
+
+
         }
         static void Postawstatki(int[,] pole, int dlugosc)
         {
-            Random xd = new Random();
             bool jest = false;
             while (!jest)
             {
@@ -100,26 +101,50 @@ namespace Statki
             Console.WriteLine(" ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ");
             Console.Write("\n");
         }
+        static void strzal(int[,] pole)
+        {
+            Console.WriteLine("Podaj X: ");
+            int x = int.Parse(Console.ReadLine());
+            Console.WriteLine("Podaj Y: ");
+            int y = int.Parse(Console.ReadLine());
+            if (pole[x, y] == 1)
+            {
+                pole[x,y] = 3;
+                Console.WriteLine("Trafiłeś");
+            }
+            else if (pole[x, y] == 0)
+            {
+                pole[x,y] = 2;
+                Console.WriteLine("Nie trafiłeś");
+            }
+        }
         static void rysujpole(int[,] pole)
         {
-            for (int i = 0; i < pole.GetLength(0); i++)
+            Console.WriteLine("  0 1 2 3 4 5 6 7 8 9");
+            for (int y = 0; y < pole.GetLength(1); y++)
             {
-                for (int j = 0; j < pole.GetLength(1); j++)
+                Console.Write(y + " ");
+                for (int x = 0; x < pole.GetLength(0); x++)
                 {
-                    if (pole[i, j] == 0)
+                    switch (pole[x, y])
                     {
-                        Console.Write("0  ");
-                    }
-                    else
-                    {
-                        Console.Write(pole[i, j] + "  ");
+                        case 0:
+                            Console.Write("~ ");
+                            break;
+                        case 1:
+                            Console.Write("■ ");
+                            break;
+                        case 2:
+                            Console.Write("o ");
+                            break;
+                        case 3:
+                            Console.Write("X ");
+                            break;
                     }
                 }
                 Console.WriteLine();
             }
         }
+
     }
 }
-
-
-
