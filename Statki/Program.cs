@@ -99,6 +99,7 @@ namespace Statki
             Console.WriteLine(" ██████╔╝██║  ██║   ██║      ██║   ███████╗███████╗███████║██║  ██║██║██║     ");
             Console.WriteLine(" ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ");
             Console.Write("\n");
+            Console.Writeline("Typy statkow");
         }
         static void rysujpole(int[,] pole)
         {
@@ -120,4 +121,5 @@ namespace Statki
         }
     }
 }
+
 
