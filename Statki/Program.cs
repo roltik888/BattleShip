@@ -22,6 +22,10 @@ namespace Statki
             int[,] pole = new int[w, h];
             int[,] widokGracza = new int[10, 10];
             int[] flota = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
+            foreach (int statekdlugosc in flota)
+            {
+                Postawstatki(pole, statekdlugosc);
+            }
             while (true)
             {
                 Console.Clear();
