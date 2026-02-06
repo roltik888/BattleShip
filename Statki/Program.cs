@@ -20,20 +20,38 @@ namespace Statki
             int w = 10;
             int h = 10;
             int[,] pole = new int[w, h];
-            int[,] widokGracza = new int[10, 10];
+            int[,] polegracza = new int[w, h];
             int[] flota = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
+            int[,] widokgracza = new int[10, 10];
             foreach (int statekdlugosc in flota)
             {
                 Postawstatki(pole, statekdlugosc);
+            }
+            foreach (int statekdlugosc in flota)
+            {
+                Postawstatki(polegracza, statekdlugosc);
             }
             while (true)
             {
                 Console.Clear();
                 DrawLogo();
-                rysujpole(pole);
-                strzal(pole);
-            }
+                Console.WriteLine("Pole kompa");
+                rysujpole(widokgracza);
+                strzal(pole, widokgracza);
 
+                if (Wygrana(pole)) { Console.WriteLine("Win"); break; }
+                Console.WriteLine("klick");
+                Console.ReadKey();
+                Console.Clear(); DrawLogo();
+                Console.WriteLine("Twoje pole");
+                rysujpole(polegracza);
+                strzalkompa(polegracza);
+
+                if (Wygrana(polegracza)) { Console.WriteLine("Nawet kompa nie wygrales..."); break; }
+
+                Console.WriteLine("klick");
+                Console.ReadKey();
+            }
 
 
 
@@ -94,6 +112,27 @@ namespace Statki
             }
             return true;
         }
+        private static void strzalkompa(int[,] polegracza)
+        {
+            int x, y;
+            do
+            {
+                x = xd.Next(0, 10);
+                y = xd.Next(0, 10);
+            }
+            while (polegracza[x, y] != 0 && polegracza[x, y] != 1);
+
+            if (polegracza[x, y] == 1)
+            {
+                polegracza[x, y] = 3;
+                Console.WriteLine("Komputer trafil");
+            }
+            else
+            {
+                polegracza[x, y] = 2;
+                Console.WriteLine("Komputer miss");
+            }
+        }
         private static void DrawLogo()
         {
             Console.Write("\n");
@@ -105,7 +144,7 @@ namespace Statki
             Console.WriteLine(" ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ");
             Console.Write("\n");
         }
-        static void strzal(int[,] pole)
+        static void strzal(int[,] pole, int[,] widokgracza)
         {
             Console.WriteLine("Podaj X: ");
             int x = int.Parse(Console.ReadLine());
@@ -113,14 +152,21 @@ namespace Statki
             int y = int.Parse(Console.ReadLine());
             if (pole[x, y] == 1)
             {
-                pole[x,y] = 3;
-                Console.WriteLine("Trafiłeś");
+                pole[x, y] = 3;
+                widokgracza[x, y] = 3;
+                Console.WriteLine("Trafiles");  
             }
             else if (pole[x, y] == 0)
             {
-                pole[x,y] = 2;
-                Console.WriteLine("Nie trafiłeś");
+                pole[x, y] = 2;
+                widokgracza[x, y] = 2;
+                Console.WriteLine("Nie trafiles");      
             }
+        }
+        static bool Wygrana(int[,] p)
+        {
+            int t = 0; for (int i = 0; i < 10; i++) for (int j = 0; j < 10; j++) if (p[i, j] == 3) t++;
+            return t >= 20;
         }
         static void rysujpole(int[,] pole)
         {
