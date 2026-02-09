@@ -24,57 +24,71 @@ namespace Statki
             int[] flota = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };
             int[,] widokgracza = new int[10, 10];
             int wybór = 0;
-            Console.WriteLine("Wybierz opcje: "
-                            +"\n1. Gra w statki67"
-                            +"\n2. Zasady");
-            wybór = int.Parse(Console.ReadLine());
-            switch (wybór)
+            do
             {
-                case 1:
-                    foreach (int statekdlugosc in flota)
-                    {
-                        Postawstatki(pole, statekdlugosc);
-                    }
-                    foreach (int statekdlugosc in flota)
-                    {
-                        Postawstatki(polegracza, statekdlugosc);
-                    }
-                    while (true)
-                    {
+                Console.Clear();
+                Console.WriteLine("Wybierz opcje: "
+                                + "\n1. Gra w statki67"
+                                + "\n2. Zasady"
+                                + "\n3. Koniec");
+                wybór = int.Parse(Console.ReadLine());
+                switch (wybór)
+                {
+                    case 1:
                         Console.Clear();
-                        DrawLogo();
-                        Console.WriteLine("Pole kompa");
-                        rysujpole(widokgracza);
-                        strzal(pole, widokgracza);
-
-                        if (Wygrana(pole))
+                        foreach (int statekdlugosc in flota)
                         {
-                            Console.WriteLine("Win"); break;
+                            Postawstatki(pole, statekdlugosc);
                         }
+                        foreach (int statekdlugosc in flota)
+                        {
+                            Postawstatki(polegracza, statekdlugosc);
+                        }
+                        while (true)
+                        {
+                            Console.Clear();
+                            DrawLogo();
+                            Console.WriteLine("Pole kompa");
+                            rysujpole(widokgracza);
+                            strzal(pole, widokgracza);
+
+                            if (Wygrana(pole))
+                            {
+                                Console.WriteLine("Win"); break;
+                            }
+                            Console.WriteLine("klick");
+                            Console.ReadKey();
+                            Console.Clear(); DrawLogo();
+                            Console.WriteLine("Twoje pole");
+                            rysujpole(polegracza);
+                            strzalkompa(polegracza);
+
+                            if (Wygrana(polegracza))
+                            {
+                                Console.WriteLine("Nawet kompa nie wygrales..."); break;
+                            }
+
+                            Console.WriteLine("klick");
+                            Console.ReadKey();
+                        }
+                        break;
+
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("Statki to gra dla dwóch osób, w której celem jest zatopienie wszystkich statków przeciwnika. Każdy gracz ustawia potajemnie na planszy 10×10 swoje statki (1 czteromasztowiec, 2 trójmasztowce, 3 dwumasztowce i 4 jednomasztowce), pionowo lub poziomo, tak aby się nie dotykały. Gracze strzelają na zmianę, podając współrzędne pól; przeciwnik informuje, czy był to strzał chybiony, trafiony lub zatopiony. Po trafieniu strzela się dalej, a po pudle kolej przechodzi na drugiego gracza. Wygrywa ten, kto pierwszy zatopi wszystkie statki przeciwnika.");
                         Console.WriteLine("klick");
                         Console.ReadKey();
-                        Console.Clear(); DrawLogo();
-                        Console.WriteLine("Twoje pole");
-                        rysujpole(polegracza);
-                        strzalkompa(polegracza);
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Error");
+                        break;
+                }
+            } while (wybór != 3);
 
-                        if (Wygrana(polegracza))
-                        {
-                            Console.WriteLine("Nawet kompa nie wygrales..."); break;
-                        }
 
-                        Console.WriteLine("klick");
-                        Console.ReadKey();
-                    }
-                    break;
-
-                case 2:
-                    Console.WriteLine("Statki to gra dla dwóch osób, w której celem jest zatopienie wszystkich statków przeciwnika. Każdy gracz ustawia potajemnie na planszy 10×10 swoje statki (1 czteromasztowiec, 2 trójmasztowce, 3 dwumasztowce i 4 jednomasztowce), pionowo lub poziomo, tak aby się nie dotykały. Gracze strzelają na zmianę, podając współrzędne pól; przeciwnik informuje, czy był to strzał chybiony, trafiony lub zatopiony. Po trafieniu strzela się dalej, a po pudle kolej przechodzi na drugiego gracza. Wygrywa ten, kto pierwszy zatopi wszystkie statki przeciwnika.");
-                    break;
-            }
-
-                
-           
 
 
 
