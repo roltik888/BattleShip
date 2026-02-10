@@ -29,8 +29,9 @@ namespace Statki
                 Console.Clear();
                 Console.WriteLine("Wybierz opcje: "
                                 + "\n1. Gra w statki67"
-                                + "\n2. Zasady"
-                                + "\n3. Koniec");
+                                + "\n2. Gra w statki (2 osoby )"
+                                + "\n3. Zasady"
+                                + "\n4. Koniec");
                 wybór = int.Parse(Console.ReadLine());
                 switch (wybór)
                 {
@@ -72,21 +73,22 @@ namespace Statki
                             Console.ReadKey();
                         }
                         break;
-
                     case 2:
+                        break;
+                    case 3:
                         Console.Clear();
                         Console.WriteLine("Statki to gra dla dwóch osób, w której celem jest zatopienie wszystkich statków przeciwnika. Każdy gracz ustawia potajemnie na planszy 10×10 swoje statki (1 czteromasztowiec, 2 trójmasztowce, 3 dwumasztowce i 4 jednomasztowce), pionowo lub poziomo, tak aby się nie dotykały. Gracze strzelają na zmianę, podając współrzędne pól; przeciwnik informuje, czy był to strzał chybiony, trafiony lub zatopiony. Po trafieniu strzela się dalej, a po pudle kolej przechodzi na drugiego gracza. Wygrywa ten, kto pierwszy zatopi wszystkie statki przeciwnika.");
                         Console.WriteLine("klick");
                         Console.ReadKey();
                         break;
-                    case 3:
+                    case 4:
                         break;
                     default:
                         Console.Clear();
                         Console.WriteLine("Error");
                         break;
                 }
-            } while (wybór != 3);
+            } while (wybór != 4);
 
 
 
@@ -180,6 +182,18 @@ namespace Statki
             Console.WriteLine(" ██████╔╝██║  ██║   ██║      ██║   ███████╗███████╗███████║██║  ██║██║██║     ");
             Console.WriteLine(" ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ");
             Console.Write("\n");
+            int w = 0;
+            Console.WriteLine("1.Kontynuj"
+                    + "\n2.Koniec");
+            w = int.Parse(Console.ReadLine());
+            switch (w)
+            {
+                case 1:
+                    break;
+                case 2:
+                    Environment.Exit(0);
+                    break;
+            }
         }
         static void strzal(int[,] pole, int[,] widokgracza)
         {
@@ -192,6 +206,7 @@ namespace Statki
                 pole[x, y] = 3;
                 widokgracza[x, y] = 3;
                 Console.WriteLine("Trafiles");
+                czyzabity(pole, x, y);
             }
             else if (pole[x, y] == 0)
             {
@@ -205,6 +220,43 @@ namespace Statki
             int t = 0; for (int i = 0; i < 10; i++) for (int j = 0; j < 10; j++) if (p[i, j] == 3) t++;
             return t >= 20;
         }
+        static void czyzabity(int[,] pole, int x, int y)
+        {
+            bool zyje = false;
+            
+            int sx = x + 1;
+            while (sx < 10 && (pole[sx, y] == 1 || pole[sx, y] == 3))
+            {
+                if (pole[sx, y] == 1) zyje = true;
+                sx++;
+            }
+            sx = x - 1;
+            while (sx >= 0 && (pole[sx, y] == 1 || pole[sx, y] == 3))
+            {
+                if (pole[sx, y] == 1) zyje = true;
+                sx--;
+            }
+            int sy = y + 1;
+            while (sy < 10 && (pole[x, sy] == 1 || pole[x, sy] == 3))
+            {
+                if (pole[x, sy] == 1) zyje = true;
+                sy++;
+            }            sy = y - 1;
+            while (sy >= 0 && (pole[x, sy] == 1 || pole[x, sy] == 3))
+            {
+                if (pole[x, sy] == 1) zyje = true;
+                sy--;
+            }
+            if (!zyje)
+            {
+                Console.WriteLine("Zabity statek");
+                
+            }
+                
+                
+
+        }
+        
         static void rysujpole(int[,] pole)
         {
             Console.WriteLine("  0 1 2 3 4 5 6 7 8 9");
