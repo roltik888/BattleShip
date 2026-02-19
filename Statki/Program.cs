@@ -1,3 +1,4 @@
+
 using System.Runtime.CompilerServices;
 
 namespace Statki
@@ -45,6 +46,7 @@ namespace Statki
                         {
                             Console.Clear();
                             Console.WriteLine("Jak stawisz statki spoczątku masz statki rozmiaru 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 (kiedy stawisz statki pionowo to kwadrat który wybrałeś jest pierwszy pozostałe idą do dołu a kiedy poziomo do pierwszy kwadrat statku jest tam gdzie wpisałeś a inni do prawej strony)");
+                            rysujpole(polegracza);
                             Postawstatkisam(polegracza, statekdlugosc);
                             rysujpole(polegracza);
                         }
@@ -55,6 +57,7 @@ namespace Statki
                             Console.WriteLine("Pole kompa");
                             rysujpole(widokgracza);
                             strzal(pole, widokgracza);
+                            click(w);
 
                             if (Wygrana(pole))
                             {
@@ -130,12 +133,9 @@ namespace Statki
             bool jest = false;
             while (!jest)
             {
-                Console.WriteLine("Wpisz x 0-10");
-                int x = int.Parse(Console.ReadLine());
-                Console.WriteLine("Wpisz y 0-10");
-                int y = int.Parse(Console.ReadLine());
-                Console.WriteLine("Wpisz kierunek 0-1");
-                int kierunek = int.Parse(Console.ReadLine());
+                int x = wczytliczb("Podaj X (0-9):", 0, 9);
+                int y = wczytliczb("Podaj Y (0-9):", 0, 9);
+                int kierunek = wczytliczb("Podaj Kierunek (0-1):", 0, 1);
                 if (Moznapostawic(pole, x, y, dlugosc, kierunek))
                 {
                     for (int i = 0; i < dlugosc; i++)
@@ -224,10 +224,14 @@ namespace Statki
         }
         static void strzal(int[,] pole, int[,] widokgracza)
         {
-            Console.WriteLine("Podaj X: ");
-            int x = int.Parse(Console.ReadLine());
-            Console.WriteLine("Podaj Y: ");
-            int y = int.Parse(Console.ReadLine());
+      
+            int x = wczytliczb("Podaj X (0-9):", 0, 9);
+            int y = wczytliczb("Podaj Y (0-9):", 0, 9);
+            if (widokgracza[x, y] == 2 || widokgracza[x, y] == 3)
+            {
+                Console.WriteLine("Już tu strzelałeś!");
+                return;
+            }
             if (pole[x, y] == 1)
             {
                 pole[x, y] = 3;
@@ -283,6 +287,18 @@ namespace Statki
 
 
 
+        }
+        static int wczytliczb(string k, int min, int max)
+        {
+            int liczba;
+            while (true)
+            {
+                Console.WriteLine(k);
+                if (int.TryParse(Console.ReadLine(), out liczba) && liczba >= min && liczba <= max)
+                    return liczba;
+
+                Console.WriteLine("Error");
+            }
         }
 
         static void rysujpole(int[,] pole)
